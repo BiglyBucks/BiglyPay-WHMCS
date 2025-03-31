@@ -8,7 +8,7 @@ if (file_exists('../../../dbconnect.php'))
 else if (file_exists('../../../init.php'))
     include '../../../init.php';
 else
-    die('[ERROR] In modules/gateways/callback/biglybucks.php: include error: Cannot find dbconnect.php or init.php');
+    die('[ERROR] In modules/gateways/callback/biglypay.php: include error: Cannot find dbconnect.php or init.php');
 
 
 
@@ -28,7 +28,7 @@ if (!isset($input['invoice_id'], $input['whmcs_invoice_id'], $input['status'], $
 }
 
 // Fetch gateway settings
-$gatewayParams = getGatewayVariables("biglybucks");
+$gatewayParams = getGatewayVariables("biglypay");
 if (!$gatewayParams['type']) {
     http_response_code(400);
     die("Module not active");
@@ -47,7 +47,7 @@ $status = $input['status'];
 $receivedAmount = (float) $input['received_amount'];
 $txHash = $input['tx_hash']; // ✅ Include transaction hash
 
-$invoiceId = checkCbInvoiceID($invoiceId, "biglybucks");
+$invoiceId = checkCbInvoiceID($invoiceId, "biglypay");
 
 checkCbTransID($txHash);
 
@@ -62,16 +62,16 @@ if (!$invoiceId) {
 // Handle fully paid and partial payments
 if ($status === "Confirmed") {
     // Create transaction entry in WHMCS
-    addInvoicePayment($invoiceId, $txHash, $receivedAmount, 0, "biglybucks");
+    addInvoicePayment($invoiceId, $txHash, $receivedAmount, 0, "biglypay");
     // Apply the payment to the invoice
 
     // Log payment for reference
-    logTransaction("BiglyBucks", $input, "Confirmed Receive of $receivedAmount");
+    logTransaction("biglypay", $input, "Confirmed Receive of $receivedAmount");
 
     http_response_code(200);
     echo "Payment processed successfully";
 } else {
-    logTransaction("BiglyBucks", $input, "Payment Failed or Unconfirmed");
+    logTransaction("biglypay", $input, "Payment Failed or Unconfirmed");
     http_response_code(400);
     echo "Invalid payment status";
 }
