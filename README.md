@@ -2,6 +2,10 @@
 
 BiglyPay is a cryptocurrency payment gateway module for WHMCS that enables your business to accept crypto payments seamlessly. This module monitors cryptocurrency transactions, updates invoice statuses (e.g., Partially Paid or Fully Paid), and logs transaction details in WHMCS. For Fees check https://biglypay.com/#Fees
 
+
+## Register
+**https://biglypay.com/register.php**
+
 ## Features
 
 - **Seamless Integration:** Easily integrate with WHMCS via the native gateways system.
